@@ -2,8 +2,8 @@
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 0.8;
+    canvas.width = window.innerWidth * 0.9;
+    canvas.height = window.innerHeight * 0.7;
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
@@ -111,8 +111,8 @@ const canvas = document.getElementById('drawCanvas');
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 0.8;
+    canvas.width = window.innerWidth * 0.9;
+    canvas.height = window.innerHeight * 0.7;
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
@@ -196,7 +196,7 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
 
     const bgMap = {
         1: {
-            file: 'bg1.gif',
+            file: '1.png',
             lines: [
                 '逡巡 (qūn xún)',
                 'To hesitate or linger –',
@@ -204,11 +204,19 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
             ]
         },
         2: {
-            file: 'bg2.gif',
+            file: '2.png',
             lines: [
                 '氤氳 (yīn yūn)',
                 'Thick vapor or haze –',
                 'like mist, smoke, or clouds.'
+            ]
+        },
+        3: {
+            file: '3.png',
+            lines: [
+                '熹微 (xī wéi)',
+                'Faint morning light –',
+                'the soft, pale light just before or at dawn.'
             ]
         }
     };
@@ -216,7 +224,7 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
     const bgInfo = bgMap[mode] || bgMap[1];
 
     const bg = new Image();
-    bg.src = bgInfo.file;
+    bg.src = 'background.png';
 
     bg.onload = async () => {
         // 背景圖
@@ -226,12 +234,12 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         await document.fonts.ready;
 
         // 左上角文字
-        tempCtx.font = '20px "Noto Sans TC", sans-serif';
-        tempCtx.fillStyle = 'black';
+        tempCtx.font = '20px "Cactus Classical Serif", serif';
+        tempCtx.fillStyle = '#666666';
         tempCtx.textBaseline = 'top';
         const lineHeight = 26;
         bgInfo.lines.forEach((line, i) => {
-            tempCtx.fillText(line, 20, 20 + i * lineHeight);
+            tempCtx.fillText(line, 30, 50 + i * lineHeight);
         });
 
         // 縮放筆跡
