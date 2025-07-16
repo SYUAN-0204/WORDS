@@ -1,88 +1,43 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>手機手寫畫布</title>
-  <style>
-    body { margin: 0; font-family: sans-serif; }
-    canvas {
-      border: 2px solid #333;
-      touch-action: none;
-      display: block;
-      width: 100vw;
-      height: 80vh;
-    }
-    .buttons {
-      display: flex;
-      justify-content: space-around;
-      padding: 1em;
-    }
-    button {
-      padding: 1em;
-      font-size: 1.2em;
-      flex: 1;
-      margin: 0 0.5em;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORDS</title>
+  <link rel="stylesheet" href="global.css">
 </head>
+
 <body>
+  <div id="words">
+    <button id="btn1" class="word">逡巡</button>
+    <button id="btn2" class="word">氤氳</button>
+    <button id="btn3" class="word">熹微</button>
+  </div>
+  <div id="theWord">
+    <img id="write1" src="1-1.gif" class="write" alt="word1">
+    <img id="write2" src="1-2.gif" class="write" alt="word2">
+    <button id="copy" class="jersey-10-regular toolbtn">COPY</button>
+  </div>
   <canvas id="drawCanvas"></canvas>
   <div class="buttons">
-    <button id="clearBtn">清除畫布</button>
-    <button id="saveBtn">下載 PNG</button>
+    <button id="clearBtn" class="jersey-10-regular toolbtn">CLEAR</button>
+    <button id="saveBtn" class="jersey-10-regular toolbtn">FINISH</button>
   </div>
 
-  <script>
-    const canvas = document.getElementById('drawCanvas');
-    const ctx = canvas.getContext('2d');
+  <!-- 預覽視窗 -->
+  <div id="previewModal">
+    <div class="modalContent">
+      <h1 class="jersey-10-regular">Download the Preview</h1>
+      <img id="previewImage" src="background.png" alt="background">
+      <div class="modalButtons">
+        <button id="confirmDownload" class="jersey-10-regular toolbtn2">DOWNLOAD</button>
+        <button id="cancelPreview" class="jersey-10-regular toolbtn2">CANCEL</button>
+      </div>
+    </div>
+  </div>
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight * 0.8;
-    }
-    resizeCanvas();
-
-    let drawing = false;
-    let lastX = 0, lastY = 0;
-
-    canvas.addEventListener('touchstart', (e) => {
-      drawing = true;
-      const touch = e.touches[0];
-      lastX = touch.clientX;
-      lastY = touch.clientY;
-    });
-
-    canvas.addEventListener('touchmove', (e) => {
-      if (!drawing) return;
-      e.preventDefault();
-      const touch = e.touches[0];
-      const x = touch.clientX;
-      const y = touch.clientY;
-      ctx.beginPath();
-      ctx.moveTo(lastX, lastY);
-      ctx.lineTo(x, y);
-      ctx.strokeStyle = '#000';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-      lastX = x;
-      lastY = y;
-    });
-
-    canvas.addEventListener('touchend', () => {
-      drawing = false;
-    });
-
-    document.getElementById('clearBtn').addEventListener('click', () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
-
-    document.getElementById('saveBtn').addEventListener('click', () => {
-      const link = document.createElement('a');
-      link.download = 'my_drawing.png';
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
+
 </html>
