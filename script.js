@@ -1,112 +1,3 @@
-/*const canvas = document.getElementById('drawCanvas');
-const ctx = canvas.getContext('2d');
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth * 0.9;
-    canvas.height = window.innerHeight * 0.7;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-let drawing = false;
-let lastX = 0, lastY = 0;
-
-//觸控事件
-canvas.addEventListener('touchstart', (e) => {
-    drawing = true;
-    const touch = e.touches[0];
-    lastX = touch.clientX;
-    lastY = touch.clientY;
-});
-
-canvas.addEventListener('touchmove', (e) => {
-    if (!drawing) return;
-    e.preventDefault();
-    const touch = e.touches[0];
-    drawLine(touch.clientX, touch.clientY);
-});
-
-canvas.addEventListener('touchend', () => {
-    drawing = false;
-});
-
-//滑鼠事件
-canvas.addEventListener('mousedown', (e) => {
-    drawing = true;
-    lastX = e.offsetX;
-    lastY = e.offsetY;
-});
-
-canvas.addEventListener('mousemove', (e) => {
-    if (!drawing) return;
-    drawLine(e.offsetX, e.offsetY);
-});
-
-canvas.addEventListener('mouseup', () => {
-    drawing = false;
-});
-
-canvas.addEventListener('mouseleave', () => {
-    drawing = false;
-});
-
-//通用畫線函數
-function drawLine(x, y) {
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY);
-    ctx.lineTo(x, y);
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    lastX = x;
-    lastY = y;
-}
-
-document.getElementById('clearBtn').addEventListener('click', () => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-});
-
-document.getElementById('saveBtn').addEventListener('click', () => {
-    const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = canvas.width;
-    tempCanvas.height = canvas.height;
-    const tempCtx = tempCanvas.getContext('2d');
-
-    const bg = new Image();
-    bg.src = 'background.png';
-    bg.onload = () => {
-        //畫上背景圖
-        tempCtx.drawImage(bg, 0, 0, tempCanvas.width, tempCanvas.height);
-        //設定縮放比例
-        const scale = 0.7; // 想要多小就調整這個，例如 0.5 是 50%
-        const scaledWidth = canvas.width * scale;
-        const scaledHeight = canvas.height * scale;
-
-        //將筆跡放到右下角
-        const offsetX = canvas.width - scaledWidth;
-        const offsetY = canvas.height - scaledHeight;
-
-        //疊加縮放後的筆跡
-        tempCtx.drawImage(canvas, offsetX, offsetY, scaledWidth, scaledHeight);
-
-        const dataURL = tempCanvas.toDataURL('image/png');
-        document.getElementById('previewImage').src = dataURL;
-        document.getElementById('previewModal').style.display = 'flex';
-
-        document.getElementById('confirmDownload').onclick = () => {
-            const link = document.createElement('a');
-            link.download = 'my_drawing.png';
-            link.href = dataURL;
-            link.click();
-            document.getElementById('previewModal').style.display = 'none';
-        };
-    };
-});
-
-document.getElementById('cancelPreview').addEventListener('click', () => {
-    document.getElementById('previewModal').style.display = 'none';
-});
-*/
 const canvas = document.getElementById('drawCanvas');
 const ctx = canvas.getContext('2d');
 
@@ -234,12 +125,12 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         await document.fonts.ready;
 
         // 左上角文字
-        tempCtx.font = '20px "Cactus Classical Serif", serif';
+        tempCtx.font = '1rem "Cactus Classical Serif", serif';
         tempCtx.fillStyle = '#666666';
         tempCtx.textBaseline = 'top';
         const lineHeight = 26;
         bgInfo.lines.forEach((line, i) => {
-            tempCtx.fillText(line, 30, 50 + i * lineHeight);
+            tempCtx.fillText(line, 20, 40 + i * lineHeight);
         });
 
         // 縮放筆跡
@@ -269,3 +160,41 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
 document.getElementById('cancelPreview').addEventListener('click', () => {
     document.getElementById('previewModal').style.display = 'none';
 });
+
+document.getElementById('btn1').addEventListener('click', () => {
+    localStorage.setItem('words250718', '1');
+    location.reload();
+});
+document.getElementById('btn2').addEventListener('click', () => {
+    localStorage.setItem('words250718', '2');
+    location.reload();
+});
+document.getElementById('btn3').addEventListener('click', () => {
+    localStorage.setItem('words250718', '3');
+    location.reload();
+});
+
+const wordMap = {
+    '1': { imgs: ['1-1.gif', '1-2.gif'], text: '逡巡' },
+    '2': { imgs: ['2-1.gif', '2-2.gif'], text: '氤氳' },
+    '3': { imgs: ['3-1.gif', '3-2.gif'], text: '熹微' }
+};
+
+// 取得 localStorage 的值（預設為 '1'）
+const canvasImg = document.getElementById('drawCanvas');
+const wordId = localStorage.getItem('words250718') || '1';
+const selected = wordMap[wordId];
+
+// 設定圖片來源
+document.getElementById('write1').src = selected.imgs[0];
+document.getElementById('write2').src = selected.imgs[1];
+document.getElementById('copy').innerText = 'COPY ' + selected.text
+
+// 複製對應中文
+document.getElementById('copy').addEventListener('click', () => {
+    navigator.clipboard.writeText(selected.text)
+        .then(() => alert(`已複製：「${selected.text}」`))
+        .catch(err => alert('複製失敗'));
+});
+
+canvasImg.style.backgroundImage = `url('${wordId}.png')`;

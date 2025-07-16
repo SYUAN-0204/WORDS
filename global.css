@@ -42,6 +42,7 @@ img.write {
 }
 
 #copy {
+    font-family: "Jersey 10", "Cactus Classical Serif", serif;
     margin-inline: 10vw;
     font-size: 1.6rem;
 }
@@ -58,7 +59,6 @@ canvas {
     background-image: url('1.png');
     background-size: cover;
     background-position: center;
-    /*background: #FFFFFF;*/
 }
 
 .buttons {
