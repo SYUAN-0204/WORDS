@@ -92,8 +92,8 @@ document.getElementById('clearBtn').addEventListener('click', () => {
 // 合成圖片並預覽下載
 document.getElementById('saveBtn').addEventListener('click', async () => {
     const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = canvas.width;
-    tempCanvas.height = canvas.height;
+    tempCanvas.width = 1080//canvas.width;
+    tempCanvas.height = 1920//canvas.height;
     const tempCtx = tempCanvas.getContext('2d');
 
     const mode = parseInt(localStorage.getItem('words250718')) || 1;
@@ -138,21 +138,27 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         await document.fonts.ready;
 
         // 左上角文字
-        tempCtx.font = '2rem "Cactus Classical Serif", serif';
+        tempCtx.font = '4rem "Cactus Classical Serif", serif';
         tempCtx.fillStyle = '#666666';
         tempCtx.textBaseline = 'top';
-        const lineHeight = 40;
+        const lineHeight = 100;
         bgInfo.lines.forEach((line, i) => {
-            tempCtx.fillText(line, 20, 40 + i * lineHeight);
+            tempCtx.fillText(line, 40, 80 + i * lineHeight);
         });
 
         // 縮放筆跡
-        const scale = 0.7;
+        const scaleX = tempCanvas.width / canvas.width;
+        const scaleY = tempCanvas.height / canvas.height;
+        const scale = Math.min(scaleX, scaleY);
+
         const scaledWidth = canvas.width * scale;
         const scaledHeight = canvas.height * scale;
-        const offsetX = canvas.width - scaledWidth;
-        const offsetY = canvas.height - scaledHeight;
+
+        const offsetX = (tempCanvas.width - scaledWidth) / 2;
+        const offsetY = (tempCanvas.height - scaledHeight) / 2;
+
         tempCtx.drawImage(canvas, offsetX, offsetY, scaledWidth, scaledHeight);
+
 
         // 預覽
         const dataURL = tempCanvas.toDataURL('image/png');
@@ -161,7 +167,7 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
 
         document.getElementById('confirmDownload').onclick = () => {
             const link = document.createElement('a');
-            link.download = 'my_drawing.png';
+            link.download = 'words.png';
             link.href = dataURL;
             link.click();
             document.getElementById('previewModal').style.display = 'none';
