@@ -56,8 +56,10 @@ canvas {
     height: 70vh;
     margin: auto;
     margin-top: 1rem;
+    background: #FFFFFF;
     background-image: url('1.png');
-    background-size: cover;
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
 }
 
