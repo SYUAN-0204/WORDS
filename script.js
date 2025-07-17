@@ -138,10 +138,10 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         await document.fonts.ready;
 
         // 左上角文字
-        tempCtx.font = '4rem "Cactus Classical Serif", serif';
+        tempCtx.font = '3.2rem "Cactus Classical Serif", serif';
         tempCtx.fillStyle = '#666666';
         tempCtx.textBaseline = 'top';
-        const lineHeight = 100;
+        const lineHeight = 80;
         bgInfo.lines.forEach((line, i) => {
             tempCtx.fillText(line, 40, 80 + i * lineHeight);
         });
@@ -154,8 +154,8 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         const scaledWidth = canvas.width * scale;
         const scaledHeight = canvas.height * scale;
 
-        const offsetX = (tempCanvas.width - scaledWidth) / 2;
-        const offsetY = (tempCanvas.height - scaledHeight) / 2;
+        const offsetX = (tempCanvas.width - scaledWidth) / 2 + 160;
+        const offsetY = (tempCanvas.height - scaledHeight) / 2 + 240;
 
         tempCtx.drawImage(canvas, offsetX, offsetY, scaledWidth, scaledHeight);
 
@@ -212,8 +212,6 @@ document.getElementById('copy').innerText = 'COPY ' + selected.text
 // 複製對應中文
 document.getElementById('copy').addEventListener('click', () => {
     navigator.clipboard.writeText(selected.text)
-        .then(() => alert(`已複製：「${selected.text}」`))
-        .catch(err => alert('複製失敗'));
 });
 
 canvasImg.style.backgroundImage = `url('${wordId}.png')`;
