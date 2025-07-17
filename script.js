@@ -2,7 +2,7 @@ const canvas = document.getElementById('drawCanvas');
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
-    const scale = window.devicePixelRatio || 2; // 依裝置調整解析度倍率，通常 2 以上
+    const scale = window.devicePixelRatio || 5; // 依裝置調整解析度倍率，通常 2 以上
     const cssWidth = window.innerWidth * 0.9;
     const cssHeight = window.innerHeight * 0.6;
 
