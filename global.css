@@ -103,8 +103,10 @@ button.toolbtn {
 }
 
 #previewImage {
-    max-width: 100%;
-    max-height: 60vh;
+    width: 40vh;
+    max-width: 45vh;
+    height: 64vh;
+    max-height: 80vh;
     border: 1px solid #CCCCCC;
     border-radius: 0.5rem;
 }
