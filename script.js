@@ -2,9 +2,22 @@ const canvas = document.getElementById('drawCanvas');
 const ctx = canvas.getContext('2d');
 
 function resizeCanvas() {
-    canvas.width = window.innerWidth * 0.9;
-    canvas.height = window.innerHeight * 0.6;
+    const scale = window.devicePixelRatio || 2; // 依裝置調整解析度倍率，通常 2 以上
+    const cssWidth = window.innerWidth * 0.9;
+    const cssHeight = window.innerHeight * 0.6;
+
+    // 設定 canvas 實際像素大小（解析度）
+    canvas.width = cssWidth * scale;
+    canvas.height = cssHeight * scale;
+
+    // CSS 顯示尺寸（不改變畫面大小）
+    canvas.style.width = cssWidth + 'px';
+    canvas.style.height = cssHeight + 'px';
+
+    // 將繪圖座標縮放（讓繪圖不會變形）
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
 }
+
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
@@ -125,10 +138,10 @@ document.getElementById('saveBtn').addEventListener('click', async () => {
         await document.fonts.ready;
 
         // 左上角文字
-        tempCtx.font = '1rem "Cactus Classical Serif", serif';
+        tempCtx.font = '2rem "Cactus Classical Serif", serif';
         tempCtx.fillStyle = '#666666';
         tempCtx.textBaseline = 'top';
-        const lineHeight = 26;
+        const lineHeight = 40;
         bgInfo.lines.forEach((line, i) => {
             tempCtx.fillText(line, 20, 40 + i * lineHeight);
         });
